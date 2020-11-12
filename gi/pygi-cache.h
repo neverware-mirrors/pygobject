@@ -104,12 +104,18 @@ typedef enum {
     PYGI_CALLING_CONTEXT_IS_FROM_PY
 } PyGICallingContext;
 
+typedef enum {
+    PYGI_ASYNC_CONTEXT_NONE = 0,
+    PYGI_ASYNC_CONTEXT_CALLBACK,
+    PYGI_ASYNC_CONTEXT_CANCELLABLE,
+} PyGIAsyncContext;
 
 struct _PyGIArgCache
 {
     const gchar *arg_name;
 
     PyGIMetaArgType meta_type;
+    PyGIAsyncContext async_context;
     gboolean is_pointer;
     gboolean is_caller_allocates;
     gboolean is_skipped;
@@ -217,6 +223,9 @@ struct _PyGICallableCache
 
 struct _PyGIFunctionCache {
     PyGICallableCache callable_cache;
+
+    /* Information about async functions. */
+    GIFunctionInfo *async_finish;
 
     /* An invoker with ffi_cif already setup */
     GIFunctionInvoker invoker;
