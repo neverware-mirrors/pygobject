@@ -225,7 +225,7 @@ struct _PyGIFunctionCache {
     PyGICallableCache callable_cache;
 
     /* Information about async functions. */
-    GIFunctionInfo *async_finish;
+    PyObject *async_finish;
 
     /* An invoker with ffi_cif already setup */
     GIFunctionInvoker invoker;

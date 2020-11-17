@@ -795,7 +795,7 @@ _function_cache_deinit_real (PyGICallableCache *callable_cache)
     PyGIFunctionCache *function_cache = (PyGIFunctionCache *) callable_cache;
     g_function_invoker_destroy (&((PyGIFunctionCache *) callable_cache)->invoker);
 
-    g_clear_pointer ((GIBaseInfo **) &function_cache->async_finish, g_base_info_unref);
+    Py_CLEAR (function_cache->async_finish);
 
     _callable_cache_deinit_real (callable_cache);
 }
@@ -878,8 +878,9 @@ _function_cache_init (PyGIFunctionCache *function_cache,
             }
 
             if (async_finish && g_base_info_get_type (async_finish))
-                function_cache->async_finish = (GIFunctionInfo *) async_finish;
-            else if (async_finish)
+                function_cache->async_finish = _pygi_info_new ((GIBaseInfo *) async_finish);
+
+            if (async_finish)
                 g_base_info_unref (async_finish);
 
             g_free (finish_name);
