@@ -54,6 +54,6 @@ void
 pygi_async_finish_cb (GObject *source_object, gpointer res, PyGIAsync *async);
 
 PyObject*
-pygi_async_new            (GIFunctionInfo *async_finish);
+pygi_async_new            (PyObject *async_finish);
 
 #endif /* __PYGI_ASYNCRESULT_H__ */

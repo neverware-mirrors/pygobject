@@ -403,16 +403,15 @@ pygi_async_finish_cb (GObject *source_object, gpointer res, PyGIAsync *self)
 
 /**
  * pygi_async_new:
- * @async_finish: A #GIFunctionInfo to wrap that is used to finish.
+ * @finish_func: A #GIFunctionInfo to wrap that is used to finish.
  *
  * Return a new async instance.
  *
  * Returns: An instance of gi.Async or %NULL on error.
  */
 PyObject *
-pygi_async_new(GIFunctionInfo *async_finish) {
+pygi_async_new(PyObject *finish_func) {
 
-    PyObject *finish_func = (PyObject*) _pygi_info_new ((GIBaseInfo *) async_finish);
     PyObject *res;
     PyObject *args;
 
